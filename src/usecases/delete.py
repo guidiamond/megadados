@@ -4,7 +4,7 @@ from uuid import UUID
 
 router = APIRouter()
 
-@router.delete("/task")
+@router.delete("/task", tags=["delete"])
 def remove(task_id: UUID):
     if not task_id in main.tasks:
         raise HTTPException(status_code=404, detail="Task not found!")

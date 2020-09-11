@@ -16,7 +16,7 @@ class UpdateInterface(BaseModel):
         None, title="current task status"
     )
 
-@router.patch("/task/status")
+@router.patch("/task/status", tags=['update'])
 def set_status(body: UpdateInterface, status_code=status.HTTP_201_CREATED):
     task_id = body.task_id
     status = body.status
@@ -27,8 +27,8 @@ def set_status(body: UpdateInterface, status_code=status.HTTP_201_CREATED):
     main.tasks[task_id].status = status
     return {"updated": True}
 
-@router.patch("/task/description")
-def set_status(body: UpdateInterface, status_code=status.HTTP_201_CREATED):
+@router.patch("/task/description", tags=['update'])
+def set_description(body: UpdateInterface, status_code=status.HTTP_201_CREATED):
     task_id = body.task_id
     description = body.description
     if not description:

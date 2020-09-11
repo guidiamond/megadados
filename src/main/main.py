@@ -1,7 +1,30 @@
 from fastapi import FastAPI
 from ..usecases import create, get, update, delete
 
-app = FastAPI()
+tags_metadata = [
+    {
+        "name": "create",
+        "description": "task creation method"
+    },
+    {
+        "name": "update",
+        "description": "update task description or status by id"
+    },
+    {
+        "name": "getters",
+        "description": "get all or filter tasks by status (DONE, UNDONE)"
+    },
+    {
+        "name": "delete",
+        "description": "delete a task by task_id method "
+    }
+]
+
+app = FastAPI(
+    title='Task Manager',
+    description='Task manager built in python for better time management of your duties',
+    openapi_tags=tags_metadata
+)
 
 global tasks
 tasks = {}
