@@ -22,7 +22,7 @@ tags_metadata = [
 
 app = FastAPI(
     title='Task Manager',
-    description='Task manager built in python for better time management of your duties',
+    description='Task manager built in python for better managing your duties',
     openapi_tags=tags_metadata
 )
 
