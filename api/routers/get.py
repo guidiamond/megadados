@@ -10,12 +10,12 @@ class TASK_STATUS(str, Enum):
     UNDONE = "undone"
 
 
-@router.get("/tasks", status_code=status.HTTP_200_OK, tags=["getters"])
+@router.get("", status_code=status.HTTP_200_OK)
 def list_all(db: DBSession = Depends(get_db)):
     return {"tasks": db.tasks}
 
 
-@router.get("/tasks/{task_status}", status_code=status.HTTP_200_OK, tags=["getters"])
+@router.get("/{task_status}", status_code=status.HTTP_200_OK, tags=["getters"])
 def list_task_by_status(task_status: TASK_STATUS, db: DBSession = Depends(get_db)):
     result_array = {}
     if task_status == TASK_STATUS.DONE:

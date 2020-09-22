@@ -3,12 +3,12 @@
 No root do repositório utilize o seguinte comando
 
 ```sh
-uvicorn src.main.main:app
+uvicorn api.main.main:app
 ```
 
 # Como testar
 
-Os testes estão na pasta src/tests
+Os testes estão na pasta api/tests
 
 Rode o seguinte comando
 

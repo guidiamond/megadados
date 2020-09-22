@@ -13,7 +13,7 @@ class UpdateInterface(BaseModel):
     status: Optional[bool] = Field(None, title="current task status")
 
 
-@router.patch("/task/status", tags=["update"])
+@router.patch("/status")
 def set_status(
     body: UpdateInterface, db: DBSession = Depends(get_db), status_code=status.HTTP_200_OK
 ):
@@ -27,7 +27,7 @@ def set_status(
     return {"updated": True}
 
 
-@router.patch("/task/description", tags=["update"])
+@router.patch("/description")
 def set_description(
     body: UpdateInterface, db: DBSession = Depends(get_db), status_code=status.HTTP_200_OK
 ):

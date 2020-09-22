@@ -5,7 +5,7 @@ from ..main import get_db, DBSession
 router = APIRouter()
 
 
-@router.delete("/task", tags=["delete"])
+@router.delete("")
 def remove(task_id: UUID, db: DBSession = Depends(get_db)):
     if not task_id in db.tasks:
         raise HTTPException(status_code=404, detail="Task not found!")

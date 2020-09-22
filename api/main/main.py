@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Depends
-from ..usecases import create, get, update, delete
+from fastapi import FastAPI
+from ..routers import create, get, update, delete
 
 tags_metadata = [
     {"name": "create", "description": "task creation method"},
@@ -14,7 +14,7 @@ app = FastAPI(
     openapi_tags=tags_metadata,
 )
 
-app.include_router(create.router)
-app.include_router(get.router)
-app.include_router(update.router)
-app.include_router(delete.router)
+app.include_router(create.router, prefix="/task", tags=["create"])
+app.include_router(get.router, prefix="/tasks", tags=["getters"])
+app.include_router(update.router, prefix="/task", tags=["update"])
+app.include_router(delete.router, prefix="/task", tags=["delete"])
