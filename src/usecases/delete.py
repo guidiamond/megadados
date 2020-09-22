@@ -1,8 +1,9 @@
-from ..main import main
-from fastapi import APIRouter, HTTPException 
 from uuid import UUID
+from fastapi import APIRouter, HTTPException
+from ..main import main
 
 router = APIRouter()
+
 
 @router.delete("/task", tags=["delete"])
 def remove(task_id: UUID):
