@@ -6,3 +6,12 @@ No root do repositório utilize o seguinte comando
 uvicorn src.main.main:app
 ```
 
+# Como testar
+
+Os testes estão na pasta src/tests
+
+Rode o seguinte comando
+
+```sh
+pytest
+```
