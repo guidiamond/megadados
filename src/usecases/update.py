@@ -1,8 +1,8 @@
-from pydantic import BaseModel, Field
 from typing import Optional
 from uuid import UUID
-from ..main import main
+from pydantic import BaseModel, Field
 from fastapi import APIRouter, HTTPException, status
+from ..main import main
 
 router = APIRouter()
 
@@ -30,8 +30,8 @@ def set_description(body: UpdateInterface, status_code=status.HTTP_200_OK):
     task_id = body.task_id
     description = body.description
     if not description:
-        raise HTTPException(status_code=422, detail="Empty status!")
+        raise HTTPException(status_code=422, detail="Empty description!")
     if not task_id in main.tasks:
         raise HTTPException(status_code=404, detail="Task not found!")
-    main.tasks[task_id].status = description
+    main.tasks[task_id].description = description
     return {"updated": True}
