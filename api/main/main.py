@@ -15,6 +15,6 @@ app = FastAPI(
 )
 
 app.include_router(create.router, prefix="/task", tags=["create"])
-app.include_router(get.router, prefix="/tasks", tags=["getters"])
+app.include_router(get.router, prefix="/task", tags=["getters"])
 app.include_router(update.router, prefix="/task", tags=["update"])
 app.include_router(delete.router, prefix="/task", tags=["delete"])

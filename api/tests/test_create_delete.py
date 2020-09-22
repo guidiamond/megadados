@@ -23,6 +23,6 @@ def test_create_delete_listall():
     assert response.status_code == 200
     assert response.json() == {"deleted": True}
 
-    response = client.get("/tasks")
+    response = client.get("/task")
     assert response.status_code == 200
     assert task_id not in response.json()["tasks"]

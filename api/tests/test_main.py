@@ -39,10 +39,6 @@ def test_methods_main_not_found():
 
 
 def test_methods_task():
-    helper_test_endpoint_dne("/task", 405, existent={"post", "delete"})
-
-
-def test_methods_tasks():
-    helper_test_endpoint_dne("/tasks", 405, existent={"get"})
-    helper_test_endpoint_dne("/tasks/done", 405, existent={"get"})
-    helper_test_endpoint_dne("/tasks/undone", 405, existent={"get"})
+    helper_test_endpoint_dne("/task", 405, existent={"get", "post", "delete"})
+    helper_test_endpoint_dne("/task/done", 405, existent={"get"})
+    helper_test_endpoint_dne("/task/undone", 405, existent={"get"})

@@ -9,7 +9,7 @@ def test_change_decripton():
     assert response.status_code == 201
     task_id = response.json()["task_id"]
 
-    response = client.get("/tasks")
+    response = client.get("/task")
     assert response.status_code == 200
     assert task_id in response.json()["tasks"]
     assert response.json()["tasks"][task_id]["description"] == "test change description original"
@@ -21,7 +21,7 @@ def test_change_decripton():
     assert response.status_code == 200
     assert response.json() == {"updated": True}
 
-    response = client.get("/tasks")
+    response = client.get("/task")
     assert response.status_code == 200
     assert task_id in response.json()["tasks"]
     assert response.json()["tasks"][task_id]["description"] == "test change description changed"
@@ -37,7 +37,7 @@ def test_change_status():
     assert response.status_code == 201
     task_id = response.json()["task_id"]
 
-    response = client.get("/tasks")
+    response = client.get("/task")
     assert response.status_code == 200
     assert task_id in response.json()["tasks"]
     assert not response.json()["tasks"][task_id]["status"]
@@ -49,7 +49,7 @@ def test_change_status():
     assert response.status_code == 200
     assert response.json() == {"updated": True}
 
-    response = client.get("/tasks")
+    response = client.get("/task")
     assert response.status_code == 200
     assert task_id in response.json()["tasks"]
     assert response.json()["tasks"][task_id]["status"]

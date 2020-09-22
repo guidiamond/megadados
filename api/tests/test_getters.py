@@ -9,7 +9,7 @@ def test_listall_delete():
     assert response.status_code == 201
     task_id = response.json()["task_id"]
 
-    response = client.get("/tasks")
+    response = client.get("/task")
     assert response.status_code == 200
     assert task_id in response.json()["tasks"]
     assert response.json()["tasks"][task_id]["description"] == "test listall delete"
@@ -27,7 +27,7 @@ def test_listall_delete_many():
         assert response.status_code == 201
         task_ids.append(response.json()["task_id"])
 
-    response = client.get("/tasks")
+    response = client.get("/task")
     assert response.status_code == 200
 
     for i, task_id in enumerate(task_ids):
@@ -48,7 +48,7 @@ def test_change_status_list():
         assert response.status_code == 201
         task_ids.append(response.json()["task_id"])
 
-    response = client.get("/tasks")
+    response = client.get("/task")
     assert response.status_code == 200
 
     for i in range(7):
@@ -59,11 +59,11 @@ def test_change_status_list():
         assert response.status_code == 200
         assert response.json() == {"updated": True}
 
-    response = client.get("/tasks/done")
+    response = client.get("/task/done")
     assert response.status_code == 200
     tasks_done = response.json()["tasks"]
 
-    response = client.get("/tasks/undone")
+    response = client.get("/task/undone")
     assert response.status_code == 200
     tasks_undone = response.json()["tasks"]
 
