@@ -1,17 +1,8 @@
-# Como rodar
+# Megadados2020-2-Projeto1
+Projeto 1 da disciplina Megadados - repositorio para alunos
 
-No root do repositório utilize o seguinte comando
+Para executar o serviço rode
 
-```sh
-uvicorn api.main.main:app
 ```
-
-# Como testar
-
-Os testes estão na pasta api/tests
-
-Rode o seguinte comando
-
-```sh
-pytest
+uvicorn tasklist.main:app --reload
 ```
