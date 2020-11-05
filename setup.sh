@@ -57,3 +57,6 @@ for file in *; do
             ;;
     esac
 done
+
+cd ..
+cp migrations/*.sql init/
