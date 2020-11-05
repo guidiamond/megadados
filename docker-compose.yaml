@@ -13,8 +13,6 @@ services:
             - type: bind
               source: ./tasklist/database/init/
               target: /docker-entrypoint-initdb.d
-            - type: bind
-              source: ./dbdata
-              target: /var/lib/mysql
-# volumes:
-#     dbdata:
+            # - type: bind
+            #   source: ./dbdata
+            #   target: /var/lib/mysql
