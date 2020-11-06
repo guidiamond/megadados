@@ -1,5 +1,6 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
 import os.path
+from uuid import uuid4
 
 from fastapi.testclient import TestClient
 
@@ -38,21 +39,33 @@ def test_read_tasks_with_no_task():
     assert response.json() == {}
 
 
+# returns user uuid
+def create_new_user(name: str):
+    user_uris = "/user?name={0}".format(name)
+    response = client.post(user_uris)
+    assert response.status_code == 201
+    return response.json()
+
+
 def test_create_and_read_some_tasks():
     setup_database()
+
+    users = [{"name": "Joao"}, {"name": "Otavio"}]
+    for i in range(2):
+        user_uris = "/user?name={0}".format(users[i]["name"])
+        response = client.post(user_uris)
+        assert response.status_code == 201
+        users[i]["userid"] = response.text.replace('"', "")
+
     tasks = [
-        {"description": "foo", "completed": False},
-        {"description": "bar", "completed": True},
-        {"description": "baz"},
-        {"completed": True},
-        {},
+        {"description": "foo", "completed": False, "owner": users[0]["userid"]},
+        {"description": "bar", "completed": True, "owner": users[1]["userid"]},
+        {"description": "baz", "owner": users[0]["userid"]},
     ]
     expected_responses = [
-        {"description": "foo", "completed": False},
-        {"description": "bar", "completed": True},
-        {"description": "baz", "completed": False},
-        {"description": "no description", "completed": True},
-        {"description": "no description", "completed": False},
+        {"description": "foo", "completed": False, "owner": users[0]["userid"]},
+        {"description": "bar", "completed": True, "owner": users[1]["userid"]},
+        {"description": "baz", "completed": False, "owner": users[0]["userid"]},
     ]
 
     # Insert some tasks and check that all succeeded.
@@ -94,32 +107,38 @@ def test_create_and_read_some_tasks():
 def test_substitute_task():
     setup_database()
 
-    # Create a task.
-    task = {"description": "foo", "completed": False}
+    # Create new user and create new task (expects 200)
+    user_id = create_new_user("Otavio bila")
+    task = {"description": "foo", "completed": False, "owner": user_id}
     response = client.post("/task", json=task)
     assert response.status_code == 200
     uuid_ = response.json()
 
-    # Replace the task.
-    new_task = {"description": "bar", "completed": True}
+    #    # Replace the task.
+    new_task = {"description": "bar", "completed": True, "owner": user_id}
     response = client.put(f"/task/{uuid_}", json=new_task)
     assert response.status_code == 200
+    print(new_task)
 
-    # Check whether the task was replaced.
+    #
+    #    # Check whether the task was replaced.
     response = client.get(f"/task/{uuid_}")
     assert response.status_code == 200
     assert response.json() == new_task
 
-    # Delete the task.
-    response = client.delete(f"/task/{uuid_}")
-    assert response.status_code == 200
+
+#
+#    # Delete the task.
+#    response = client.delete(f"/task/{uuid_}")
+#    assert response.status_code == 200
 
 
 def test_alter_task():
     setup_database()
 
     # Create a task.
-    task = {"description": "foo", "completed": False}
+    user_id = create_new_user("Cleiton pleiba")
+    task = {"description": "foo", "completed": False, "owner": user_id}
     response = client.post("/task", json=task)
     assert response.status_code == 200
     uuid_ = response.json()
@@ -171,7 +190,8 @@ def test_delete_all_tasks():
     setup_database()
 
     # Create a task.
-    task = {"description": "foo", "completed": False}
+    user_id = create_new_user("Nelsinho da esquina")
+    task = {"description": "foo", "completed": False, "owner": user_id}
     response = client.post("/task", json=task)
     assert response.status_code == 200
     uuid_ = response.json()
