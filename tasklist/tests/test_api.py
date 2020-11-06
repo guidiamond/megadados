@@ -172,6 +172,29 @@ def test_read_nonexistant_task():
     assert response.status_code == 404
 
 
+def delete_user():
+    setup_database()
+    user_id = create_new_user("Ismael da Terra Bonita")
+    response = client.delete(f"/user/{user_id}")
+    assert response.status_code == 204
+
+
+def change_user_info():
+    setup_database()
+    user_id = create_new_user("Pitoresco do Pacaembu")
+    new_name = "Pereira do Enquadro Santos"
+    response = client.patch(f"/user/info/{user_id}?name={new_name}")
+    assert response.status_code == 204
+
+
+def get_user_info():
+    setup_database()
+    user_id = create_new_user("Peitera nike shox")
+    response = client.get(f"/user/info/{user_id}")
+    assert response.status_code == 200
+    assert response["name"] == "Peitera nike shox"
+
+
 def test_delete_invalid_task():
     setup_database()
 
